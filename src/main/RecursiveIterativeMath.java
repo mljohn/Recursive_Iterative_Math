@@ -36,7 +36,7 @@ public class RecursiveIterativeMath {
     ProjectFrame projectFrame = new ProjectFrame("Recursive/Iterative Example", 350, 200);
     
     JPanel buttonPanel = new JPanel();
-    JPanel textPanel = new JPanel(new GridLayout(4, 2, 5, 5));
+    JPanel textPanel = new JPanel(new GridLayout(5, 2, 5, 5));
     
     JRadioButton iterativeButton = new JRadioButton("Iterative", true);
     JRadioButton recursiveButton = new JRadioButton("Recursive");
@@ -51,6 +51,7 @@ public class RecursiveIterativeMath {
     ProjectLabel label = new ProjectLabel("Enter a number");
     
     JButton computeButton = new JButton("Compute");
+    JButton clearButton = new JButton("Clear");
     
     computeButton.addActionListener(new ActionListener() {
       
@@ -69,11 +70,17 @@ public class RecursiveIterativeMath {
         } else if (recursiveButton.isSelected() && startNumber > 1) {
           resultTextArea.setText(Integer.toString(computeRecursive(startNumber)));
           efficiencyTextArea.setText(Integer.toString(getEfficiency()));
-        } else {
-          showMessageDialog(projectFrame, "Please enter a valid positive integer larger than 1.");
-          enterTextArea.setText(null);
         }
-        
+      }
+    });
+    
+    clearButton.addActionListener(new ActionListener() {
+      
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        enterTextArea.setText(null);
+        resultTextArea.setText(null);
+        efficiencyTextArea.setText(null);
       }
     });
     
@@ -91,6 +98,8 @@ public class RecursiveIterativeMath {
     textPanel.add(resultTextArea);
     textPanel.add(efficiencyLabel);
     textPanel.add(efficiencyTextArea);
+    textPanel.add(new JPanel());
+    textPanel.add(clearButton);
     
     projectFrame.setLayout(new BorderLayout(5, 5));
     projectFrame.add(buttonPanel, NORTH);
