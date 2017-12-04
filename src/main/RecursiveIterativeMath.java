@@ -1,3 +1,9 @@
+/**
+ * File: RecursiveIterativeMath
+ * Author: Michelle John
+ * Date: 03 Dec 2017
+ * Purpose: Project 3: Recursion and Iteration
+ */
 package main;
 
 import static java.awt.BorderLayout.CENTER;
@@ -13,6 +19,11 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -23,8 +34,16 @@ import projectcomponents.ProjectFrame;
 import projectcomponents.ProjectLabel;
 import projectcomponents.ProjectTextArea;
 
+/**
+ * Main class to start this application. 
+ */
 public class RecursiveIterativeMath {
 
+  /**
+   * Main method. Start of application.
+   * 
+   * @param args the array of arguments
+   */
   public static void main(String[] args) {
     
     RecursiveIterativeMath example = new RecursiveIterativeMath();
@@ -32,6 +51,9 @@ public class RecursiveIterativeMath {
 
   }
   
+  /**
+   * Method that creates this application's GUI.
+   */
   private void createGui() {
     ProjectFrame projectFrame = new ProjectFrame("Recursive/Iterative Example", 350, 200);
     
@@ -54,7 +76,6 @@ public class RecursiveIterativeMath {
     JButton clearButton = new JButton("Clear");
     
     computeButton.addActionListener(new ActionListener() {
-      
       @Override
       public void actionPerformed(ActionEvent e) {
         int startNumber = 0;
@@ -75,7 +96,6 @@ public class RecursiveIterativeMath {
     });
     
     clearButton.addActionListener(new ActionListener() {
-      
       @Override
       public void actionPerformed(ActionEvent e) {
         enterTextArea.setText(null);
@@ -101,6 +121,7 @@ public class RecursiveIterativeMath {
     textPanel.add(new JPanel());
     textPanel.add(clearButton);
     
+    projectFrame.addWindowListener(new ProjectWindowListener());
     projectFrame.setLayout(new BorderLayout(5, 5));
     projectFrame.add(buttonPanel, NORTH);
     projectFrame.add(textPanel, CENTER);
@@ -109,5 +130,38 @@ public class RecursiveIterativeMath {
     
     projectFrame.display();
   }
-
+  
+  /**
+   * Private class that handles the window closing event.
+   */
+  private class ProjectWindowListener extends WindowAdapter {
+    /**
+     * Re-implementation if the windowClosing method in {@link WindowAdapter}. This method computes the values
+     * using an index of 0 to 10 and prints the results to a csv file.
+     */
+    public void windowClosing(WindowEvent e) {
+      BufferedWriter writer = null;
+      
+      StringBuilder sb = new StringBuilder();
+      for (int i = 0;  i < 10; i++) {
+        sb.append(Integer.toString(i) 
+            + ","
+            + Integer.toString(computeIterative(i)) 
+            + "," 
+            + Integer.toString(getEfficiency())
+            + "," 
+            + Integer.toString(computeRecursive(i))
+            + "," 
+            + Integer.toString(getEfficiency())
+            + "\n");
+      }
+      try {
+        writer = new BufferedWriter(new FileWriter("Project_Data.csv"));
+        writer.write(sb.toString());
+        writer.close();
+      } catch (IOException ex) {
+        System.err.println("Failed to write the file");
+      }
+    }
+  }
 }

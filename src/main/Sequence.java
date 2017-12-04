@@ -1,5 +1,14 @@
+/**
+ * File: Sequence
+ * Author: Michelle John
+ * Date: 03 Dec 2017
+ * Purpose: Project 3: Recursion and Iteration
+ */
 package main;
 
+/**
+ * Class that holds the interative and recursive funtions.
+ */
 public class Sequence {
 
   private final static int FIRST_NUMBER = 0;
@@ -14,6 +23,12 @@ public class Sequence {
   private Sequence() {
   }
 
+  /**
+   * Method to compute the value iteratively.
+   * 
+   * @param numberIterations the number of iterations
+   * @return the calculated value
+   */
   public static int computeIterative(int numberIterations) {
     int firstOperand = FIRST_NUMBER;
     int secondOperand = SECOND_NUMBER;
@@ -29,6 +44,12 @@ public class Sequence {
     return currentValue;
   }
 
+  /**
+   * Method to compute the value recursively.
+   * 
+   * @param number the number to calculate to
+   * @return the calculated value
+   */
   public static int computeRecursive(int number) {
     efficiencyCounter = 0;
     recursiveIndex = number;
@@ -36,10 +57,19 @@ public class Sequence {
     return recursiveAnswer;
   }
 
+  /**
+   * @return the efficiency
+   */
   public static int getEfficiency() {
     return efficiencyCounter;
   }
 
+  /**
+   * Private method to recursively calculate the value.
+   * 
+   * @param operand1 the first operand
+   * @param operand2 the second operand
+   */
   private static void recursiveFunction(int operand1, int operand2) {
     if (recursiveIndex < 2) {
       return;
